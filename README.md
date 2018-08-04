@@ -1,7 +1,7 @@
 # spawn_multiple_hector_quadrotors
 Bash script and launch files to spawn multiple hector quadrotors in an emtpy Gazebo world, controlled by ROS nodes.
 
-Launch Instructions:
+# Launch Instructions:
 
 SETUP:
 Place the 2 .launch files in /catkin_ws/src/hector_quadrotor/hector_quadrotor_gazebo/launch
@@ -16,13 +16,13 @@ roslaunch hector_quadrotor_gazebo x_quadrotors_empty_world.launch nr:=2
 
 Terminal 2:
 rosservice call /uav1/enable_motors “enable: true”
-# NOTE: repeat this command for each uavX you have (TODO: write a script to automatically do this)
+NOTE: repeat this command for each uavX you have (TODO: write a script to automatically do this)
 
 Terminal 3:
-# Send Twist messages
+Send Twist messages
 rostopic pub -r 10 /uav1/cmd_vel geometry_msgs/Twist '{linear: {x: 0.0, y: 0.0, z: 1.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
 
-ELSE (automated script):
+# ELSE (automated script):
 ./spawn_drones.sh 
 
 NOTE 1:  this file can be opened up and for loop can be adjusted to control number of drones
@@ -31,7 +31,8 @@ NOTE 3: still need to enable_motors for each drone (can be built into script pre
 NOTE 4: To work need to Terminal > Edit > Profile Preferences > set profile name as “hold_profile” and under command set “When command exits” as “Hold the terminal open”.
 NOTE 5: EACH DRONE IS JUST CALLED 1,2,3 etc. (starting y_pos is name - 1)
 
-Useful links for reference:
+# Useful links for reference:
+
 https://github.com/micpalmia/youbot_ros_tools/wiki/Understanding-launch-and-namespaces
 https://askubuntu.com/questions/46627/how-can-i-make-a-script-that-opens-terminal-windows-and-executes-commands-in-the
 https://answers.ros.org/question/229489/how-do-i-create-dynamic-launch-files/
