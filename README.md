@@ -1,35 +1,26 @@
 # spawn_multiple_hector_quadrotors
 Bash script and launch files to spawn multiple hector quadrotors in an emtpy Gazebo world, controlled by ROS nodes.
 
-# Launch Instructions:
+# Setup:
 
 SETUP:
-Place the 2 .launch files in /catkin_ws/src/hector_quadrotor/hector_quadrotor_gazebo/launch
+1. Place the 2 .launch files in /catkin_ws/src/hector_quadrotor/hector_quadrotor_gazebo/launch
+2. Go to Terminal > Edit > Profile Preferences > set profile name as “hold_profile” and under command set “When command exits” as “Hold the terminal open”.
 
 IF YOU MADE ANY CHANGES:
 catkin_make
 source devel/setup.bash
 
-ELSE IF MANUAL EDIT OF # DRONES:
-Terminal 1:
-roslaunch hector_quadrotor_gazebo x_quadrotors_empty_world.launch nr:=2
-
-Terminal 2:
-rosservice call /uav1/enable_motors “enable: true”
-NOTE: repeat this command for each uavX you have (TODO: write a script to automatically do this)
-
-Terminal 3:
-Send Twist messages
-rostopic pub -r 10 /uav1/cmd_vel geometry_msgs/Twist '{linear: {x: 0.0, y: 0.0, z: 1.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
-
-# ELSE (automated script):
+# Launch Script:
 ./spawn_drones.sh 
 
-NOTE 1:  this file can be opened up and for loop can be adjusted to control number of drones
-NOTE 2: a new terminal window opens for each drone (i.e. 100 drones = 100 terminal windows (can shift to batches of 5 or 10 in the future)
-NOTE 3: still need to enable_motors for each drone (can be built into script pretty easily)
-NOTE 4: To work need to Terminal > Edit > Profile Preferences > set profile name as “hold_profile” and under command set “When command exits” as “Hold the terminal open”.
-NOTE 5: EACH DRONE IS JUST CALLED 1,2,3 etc. (starting y_pos is name - 1)
+#Notes:
+1. this file can be opened up and for loop can be adjusted to control number of drones
+2. a new terminal window opens for each drone (i.e. 100 drones = 100 terminal windows (can shift to batches of 5 or 10 in the future)
+3. enable_motors of drone can sometimes fail (if it does, enable manually). This is either due to not enough time delay (currently 20 seconds built in, tuned to match my computer's speed) or due to memory issues. Both can be solved by just running command manually in a new terminal.
+4. Each drone is called uav1, uav2... etc.
+5. Starting y position of each drone is its number - 1 i.e. for uav1: y_pos = 0.0
+6. To actually control drones send twist messages i.e.: rostopic pub -r 10 /uav1/cmd_vel geometry_msgs/Twist '{linear: {x: 0.0, y: 0.0, z: 1.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}'
 
 # Useful links for reference:
 

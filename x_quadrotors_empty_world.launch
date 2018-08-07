@@ -3,10 +3,10 @@
 <launch>
   <arg name="model" default="$(find hector_quadrotor_description)/urdf/quadrotor.gazebo.xacro" />
   <arg name="nr" default="1" />
-  <group ns="$(eval str(arg('nr')))">
+  <group ns="$(eval 'uav' + str(arg('nr')))">
     <include file="$(find hector_quadrotor_gazebo)/launch/spawn_quadrotor.launch">
-      <arg name="name" value="$(eval str(arg('nr')))" />
-      <arg name="tf_prefix" value="$(eval str(arg('nr')))" />
+      <arg name="name" value="$(eval 'uav' + str(arg('nr')))" />
+      <arg name="tf_prefix" value="$(eval 'uav' + str(arg('nr')))" />
       <arg name="model" value="$(arg model)" />
       <arg name="y" value="$(eval arg('nr') - 1)" />
     </include>
